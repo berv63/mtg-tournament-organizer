@@ -4,11 +4,11 @@ Organize Magic The Gathering, MTG, tournaments and keep track of the results.
 
 To run
 
-`docker-compose up`
+`docker compose up -d`
 
-Then go to port URL
+It is served at `https://mtg.berv.us` by the shared Caddy edge proxy ([berv63/caddy](https://github.com/berv63/caddy)), which must be running first because it creates the `caddy` network. The container publishes no ports of its own.
 
-`http://localhost:5000`
+After changing `docker-compose.yml` volumes, recreate it with `docker compose down; docker compose up -d` (a plain `up -d` can keep the old mounts).
 
 ## Usage
 

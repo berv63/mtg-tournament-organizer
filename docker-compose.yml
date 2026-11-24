@@ -1,9 +1,23 @@
-version: '3'
+name: mtg-tournament-organizer
+
+# HTTPS is handled by the shared edge proxy (the separate "caddy" project),
+# which must be started first because it creates the "caddy" network.
+# Its Caddyfile routes mtg.berv.us to mtg-tournament:80.
+
 services:
   web:
-    image: chentex/docker-nginx-centos:latest-centos7
-    ports:
-    - "5000:80"
+    image: nginx:alpine
+    restart: unless-stopped
+    # Not published to the host; only Caddy can reach it.
+    # Only the site's files are served (not .git or the rest of the repo).
     volumes:
-    - .:/data/www
-  
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./scripts:/usr/share/nginx/html/scripts:ro
+      - ./style:/usr/share/nginx/html/style:ro
+    networks:
+      caddy:
+        aliases: [mtg-tournament]
+
+networks:
+  caddy:
+    external: true
