@@ -6,14 +6,10 @@ name: mtg-tournament-organizer
 
 services:
   web:
-    image: nginx:alpine
+    # Multi-stage build: Vite builds the React app, nginx:alpine serves dist/.
+    build: .
     restart: unless-stopped
     # Not published to the host; only Caddy can reach it.
-    # Only the site's files are served (not .git or the rest of the repo).
-    volumes:
-      - ./index.html:/usr/share/nginx/html/index.html:ro
-      - ./scripts:/usr/share/nginx/html/scripts:ro
-      - ./style:/usr/share/nginx/html/style:ro
     networks:
       caddy:
         aliases: [mtg-tournament]

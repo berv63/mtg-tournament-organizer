@@ -8,7 +8,15 @@ To run
 
 It is served at `https://mtg.berv.us` by the shared Caddy edge proxy ([berv63/caddy](https://github.com/berv63/caddy)), which must be running first because it creates the `caddy` network. The container publishes no ports of its own.
 
-After changing `docker-compose.yml` volumes, recreate it with `docker compose down; docker compose up -d` (a plain `up -d` can keep the old mounts).
+The image is built from the `Dockerfile` (Vite build, served by nginx:alpine). After changing the code, rebuild with `docker compose up -d --build`.
+
+## Development
+
+Built with React, Tailwind CSS, and Vite. For local iteration without Docker:
+
+`npm install`
+
+`npm run dev`
 
 ## Usage
 
@@ -33,5 +41,3 @@ In case of a draw both get 1 point.
 ## TODO
 
 - More tournament modalities
-
-- Make it prettier.
